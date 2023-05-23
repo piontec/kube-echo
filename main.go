@@ -3,8 +3,37 @@ package main
 import (
 	"log"
 	"net"
+	"net/http"
 	"os"
+
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
+
+var VERSION = "dev"
+
+func startPrometheusExporter() {
+	// Create a new Prometheus gauge metric
+	heartbeatMetric := prometheus.NewGauge(prometheus.GaugeOpts{
+		Name: "heartbeat",
+		Help: "Echo heartbeat metric",
+	})
+
+	// Set the value of the heartbeat metric to 1
+	heartbeatMetric.Set(1)
+
+	// Register the metric with the Prometheus default registry
+	prometheus.MustRegister(heartbeatMetric)
+
+	// Create a new HTTP handler for Prometheus metrics
+	http.Handle("/metrics", promhttp.Handler())
+
+	// Start the HTTP server to expose the metrics
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		panic(err)
+	}
+}
 
 func handleUDPConnection(conn *net.UDPConn, logEnabled bool) {
 	buffer := make([]byte, 1024)
@@ -97,7 +126,9 @@ func main() {
 
 	defer tcpListener.Close()
 
-	log.Println("TCP Echo Server listening on", tcpAddr.String())
+	go startPrometheusExporter()
+	log.Println("Started prometheus metric exporter on port :8080")
+	log.Printf("TCP/UDP Echo Server v%s listening on %s\n", VERSION, tcpAddr.String())
 
 	for {
 		conn, err := tcpListener.Accept()
