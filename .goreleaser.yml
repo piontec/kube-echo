@@ -32,63 +32,63 @@ archives:
     files:
       - none*
 dockers:
-- image_templates:
-    - 'ghcr.io/piontec/kube-echo:{{ .Tag }}-amd64'
-    - 'ghcr.io/piontec/kube-echo:latest-amd64'
-  dockerfile: Dockerfile
-  use: buildx
-    #  goos: linux
-    #  goarch: amd64
-  build_flag_templates:
-    - "--pull" 
-    - "--label=org.opencontainers.image.created={{ .Date }}"
-    - "--label=org.opencontainers.image.name={{ .ProjectName }}"
-    - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
-    - "--label=org.opencontainers.image.version={{ .Version }}"
-    - "--label=org.opencontainers.image.source={{ .GitURL }}"
-    - "--platform=linux/amd64"
-- image_templates:
-    - 'ghcr.io/piontec/kube-echo:{{ .Tag }}-arm64'
-    - 'ghcr.io/piontec/kube-echo:latest-arm64'
-  dockerfile: Dockerfile
-  use: buildx
-    #  goos: linux
-    #  goarch: arm64
-  build_flag_templates:
-    - "--pull"
-    - "--label=org.opencontainers.image.created={{ .Date }}"
-    - "--label=org.opencontainers.image.name={{ .ProjectName }}"
-    - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
-    - "--label=org.opencontainers.image.version={{ .Version }}"
-    - "--label=org.opencontainers.image.source={{ .GitURL }}"
-    - "--platform=linux/arm64"
-- image_templates:
-    - 'ghcr.io/piontec/kube-echo:{{ .Tag }}-arm'
-    - 'ghcr.io/piontec/kube-echo:latest-arm'
-  dockerfile: Dockerfile
-  use: buildx
-    #  goos: linux
-    #  goarch: arm
-  build_flag_templates:
-    - "--pull"
-    - "--builder=multi-arch-builder"
-    - "--label=org.opencontainers.image.created={{ .Date }}"
-    - "--label=org.opencontainers.image.name={{ .ProjectName }}"
-    - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
-    - "--label=org.opencontainers.image.version={{ .Version }}"
-    - "--label=org.opencontainers.image.source={{ .GitURL }}"
-    - "--platform=linux/arm"
+  - image_templates:
+      - 'ghcr.io/piontec/kube-echo:{{ .Tag }}-amd64'
+      - 'ghcr.io/piontec/kube-echo:latest-amd64'
+    dockerfile: Dockerfile
+    use: buildx
+      #  goos: linux
+      #  goarch: amd64
+    build_flag_templates:
+      - "--pull" 
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.name={{ .ProjectName }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.source={{ .GitURL }}"
+      - "--platform=linux/amd64"
+  - image_templates:
+      - 'ghcr.io/piontec/kube-echo:{{ .Tag }}-arm64'
+      - 'ghcr.io/piontec/kube-echo:latest-arm64'
+    dockerfile: Dockerfile
+    use: buildx
+      #  goos: linux
+      #  goarch: arm64
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.name={{ .ProjectName }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.source={{ .GitURL }}"
+      - "--platform=linux/arm64"
+  - image_templates:
+      - 'ghcr.io/piontec/kube-echo:{{ .Tag }}-arm'
+      - 'ghcr.io/piontec/kube-echo:latest-arm'
+    dockerfile: Dockerfile
+    use: buildx
+      #  goos: linux
+      #  goarch: arm
+    build_flag_templates:
+      - "--pull"
+      - "--builder=multi-arch-builder"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.name={{ .ProjectName }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.source={{ .GitURL }}"
+      - "--platform=linux/arm"
 docker_manifests:
-- name_template: 'ghcr.io/piontec/kube-echo:{{ .Tag }}'
-  image_templates:
-    - 'ghcr.io/piontec/kube-echo:{{ .Tag }}-amd64'
-    - 'ghcr.io/piontec/kube-echo:{{ .Tag }}-arm64'
-    - 'ghcr.io/piontec/kube-echo:{{ .Tag }}-arm'
-- name_template: 'ghcr.io/piontec/kube-echo:latest'
-  image_templates:
-    - 'ghcr.io/piontec/kube-echo:latest-amd64'
-    - 'ghcr.io/piontec/kube-echo:latest-arm64'
-    - 'ghcr.io/piontec/kube-echo:latest-arm'
+  - name_template: 'ghcr.io/piontec/kube-echo:{{ .Tag }}'
+    image_templates:
+      - 'ghcr.io/piontec/kube-echo:{{ .Tag }}-amd64'
+      - 'ghcr.io/piontec/kube-echo:{{ .Tag }}-arm64'
+      - 'ghcr.io/piontec/kube-echo:{{ .Tag }}-arm'
+  - name_template: 'ghcr.io/piontec/kube-echo:latest'
+    image_templates:
+      - 'ghcr.io/piontec/kube-echo:latest-amd64'
+      - 'ghcr.io/piontec/kube-echo:latest-arm64'
+      - 'ghcr.io/piontec/kube-echo:latest-arm'
 docker_signs:
   - cmd: cosign
     env:
@@ -125,3 +125,4 @@ signs:
     output: true
 changelog:
   use: github
+  skip: true
