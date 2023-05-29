@@ -14,8 +14,6 @@ builds:
       - amd64
       - arm64
       - arm
-    goarm:
-      - 7
   - <<: *build_defaults
     id: windows
     goos:
@@ -37,8 +35,8 @@ dockers:
       - 'ghcr.io/piontec/kube-echo:latest-amd64'
     dockerfile: Dockerfile
     use: buildx
-      #  goos: linux
-      #  goarch: amd64
+    goos: linux
+    goarch: amd64
     build_flag_templates:
       - "--pull" 
       - "--label=org.opencontainers.image.created={{ .Date }}"
@@ -52,8 +50,8 @@ dockers:
       - 'ghcr.io/piontec/kube-echo:latest-arm64'
     dockerfile: Dockerfile
     use: buildx
-      #  goos: linux
-      #  goarch: arm64
+    goos: linux
+    goarch: arm64
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.created={{ .Date }}"
@@ -67,8 +65,8 @@ dockers:
       - 'ghcr.io/piontec/kube-echo:latest-arm'
     dockerfile: Dockerfile
     use: buildx
-      #  goos: linux
-      #  goarch: arm
+    goos: linux
+    goarch: arm
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.created={{ .Date }}"
@@ -100,6 +98,7 @@ docker_signs:
     output: true
 source:
   enabled: true
+  rlcp: true  
   name_template: '{{ .ProjectName }}_{{ .Version }}_src'
 sboms:
   - artifacts: archive
@@ -124,4 +123,3 @@ signs:
     output: true
 changelog:
   use: github
-  skip: true
