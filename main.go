@@ -89,7 +89,7 @@ func main() {
 	logEnabled := os.Getenv("LOG_ENABLED") == "true"
 
 	// UDP
-	udpAddr, err := net.ResolveUDPAddr("udp", "localhost:"+listeningPort)
+	udpAddr, err := net.ResolveUDPAddr("udp", ":"+listeningPort)
 	if err != nil {
 		log.Println("Error resolving UDP address:", err)
 		os.Exit(1)
@@ -112,7 +112,7 @@ func main() {
 	}()
 
 	// TCP
-	tcpAddr, err := net.ResolveTCPAddr("tcp", "localhost:"+listeningPort)
+	tcpAddr, err := net.ResolveTCPAddr("tcp", ":"+listeningPort)
 	if err != nil {
 		log.Println("Error resolving TCP address:", err)
 		os.Exit(1)
